@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import { useContext } from 'react';
-import { HotspotContext } from '@/contexts/hotspotContext';
+import { appContext } from '@/contexts/appContext';
 import HotSpotList from '../../components/HotSpotList';
 import MapView, { Marker } from 'react-native-maps';
 
 
 
 export default function MapScreen() {
-  const { hotSpots = [] } = useContext(HotspotContext);
+  const { hotSpots = [] } = useContext(appContext);
   const firstHotSpot = hotSpots[0];
 
     return (

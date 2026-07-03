@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './screens/homeScreen';
 import HotSpotListScreen from './screens/hotSpotListScreen';
 import MapScreen from './screens/mapScreen';
-import { HotspotContext } from '../contexts/hotspotContext';
+import { appContext } from '../contexts/appContext';
 import AppColors from "../styles/theme/colors";
 import appStyles from '../styles/screens/app.styles';
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -43,7 +43,7 @@ export default function App() {
 
     return (
         <SafeAreaView style={styles.screen} edges={['top', 'left', 'right']}>
-            <HotspotContext.Provider value={{ hotSpots }}>
+            <appContext.Provider value={{ hotSpots, theme }}>
                 <Tab.Navigator
                     screenOptions={({ route }) => ({
                         headerShown: false,
@@ -67,7 +67,7 @@ export default function App() {
                     <Tab.Screen name="Map" component={MapScreen} />
                 </Tab.Navigator>
                 <StatusBar style={AppColors[theme].status} />
-            </HotspotContext.Provider>
+            </appContext.Provider>
         </SafeAreaView>
     );
 }

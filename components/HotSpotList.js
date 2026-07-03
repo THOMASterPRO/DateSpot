@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { HotspotContext } from '../contexts/hotspotContext';
+import { appContext } from '../contexts/appContext';
 
 export default function HotSpotList({ data, onPressItem, ListEmptyComponent }) {
-	const { hotSpots = [] } = useContext(HotspotContext);
+	const { hotSpots = [] } = useContext(appContext);
 	const listData = data ?? hotSpots;
 
 	return (
