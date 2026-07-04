@@ -20,7 +20,7 @@ const mapSceenStyles = (theme) => {
             top: 16,
             paddingHorizontal: 14,
             paddingVertical: 12,
-            borderRadius: 16,
+            borderRadius: 8,
             backgroundColor: appColor.app.bg,
             borderWidth: 1,
             borderColor: appColor.li.border,

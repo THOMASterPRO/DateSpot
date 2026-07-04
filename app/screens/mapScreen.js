@@ -10,8 +10,8 @@ import { useRouter } from 'expo-router';
 
 //defineer de legenda van de map
 const Legend = [
-  { label: 'Activiteit', type: 'activiteit' },
-  { label: 'Wandeling', type: 'wandeling' },
+  { label: 'Activity', type: 'activiteit' },
+  { label: 'Walk', type: 'wandeling' },
   { label: 'Museum', type: 'museum' },
   { label: 'Food / Drinks', type: 'food/drinks' },
 ];
