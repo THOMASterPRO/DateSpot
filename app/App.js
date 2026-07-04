@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from './screens/homeScreen';
+import FavoriteScreen from './screens/FavoriteScreen';
 import HotSpotListScreen from './screens/hotSpotListScreen';
 import MapScreen from './screens/mapScreen';
 import { appContext } from '../contexts/appContext';
@@ -15,59 +13,39 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
-
 export default function App() {
     const Tab = createBottomTabNavigator();
-    const [hotSpots, setHotspots] = useState([]);
-    const [theme, setTheme] = useState("light");
+    const { theme } = useContext(appContext);
     const styles = appStyles(theme);
-
-    const getHotspots = async () => {
-        try {
-            const response = await fetch(
-                "https://thomasterpro.github.io/DateHotSpots/hotspots.json"
-            );
-
-            const data = await response.json();
-
-            setHotspots(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        getHotspots();
-    }, []);
 
 
     return (
         <SafeAreaView style={styles.screen} edges={['top', 'left', 'right']}>
-            <appContext.Provider value={{ hotSpots, theme }}>
-                <Tab.Navigator
-                    screenOptions={({ route }) => ({
-                        headerShown: false,
-                        tabBarIcon: ({ focused, color, size }) => {
-                            let iconName;
+            <Tab.Navigator
+                initialRouteName="Map"
+                screenOptions={({ route }) => ({
+                    headerShown: false,
+                    tabBarStyle: styles.bar,
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
 
-                            if (route.name === 'Home') {
-                                iconName = focused ? 'home' : 'home-outline';
-                            } else if (route.name === 'Map') {
-                                iconName = focused ? 'map' : 'map-outline';
-                            } else if (route.name === 'HotSpots') {
-                                iconName = focused ? 'location' : 'location-outline';
-                            }
+                        if (route.name === 'Favorites') {
+                            iconName = focused ? 'heart' : 'heart-outline';
+                        } else if (route.name === 'Map') {
+                            iconName = focused ? 'map' : 'map-outline';
+                        } else if (route.name === 'HotSpots') {
+                            iconName = focused ? 'location' : 'location-outline';
+                        }
 
-                            return <Ionicons name={iconName} size={size} color={color} />;
-                        },
-                    })}
-                >
-                    <Tab.Screen name="HotSpots" component={HotSpotListScreen} />
-                    <Tab.Screen name="Home" component={HomeScreen} />
-                    <Tab.Screen name="Map" component={MapScreen} />
-                </Tab.Navigator>
-                <StatusBar style={AppColors[theme].status} />
-            </appContext.Provider>
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                    },
+                })}
+            >
+                <Tab.Screen name="HotSpots" component={HotSpotListScreen} />
+                <Tab.Screen name="Map" component={MapScreen} />
+                <Tab.Screen name="Favorites" component={FavoriteScreen} />
+            </Tab.Navigator>
+            <StatusBar style={AppColors[theme].status} />
         </SafeAreaView>
     );
 }

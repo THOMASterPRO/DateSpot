@@ -1,33 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useContext } from 'react';
 import { appContext } from '@/contexts/appContext';
 import HotSpotList from '../../components/HotSpotList';
+import hotSpotListScreenStyles from '../../styles/screens/hotspotListScreen.styles';
 
+export default function HotSpotListScreen() {
+    const navigation = useNavigation();
+    const { theme = [] } = useContext(appContext);
+    const styles = hotSpotListScreenStyles(theme);
 
-export default function MapScreen() {
-        const { hotSpots } = useContext(appContext);
+    // open het map scherm met de pin van de hotspot die is aangeklikt
+    const handlePressItem = (hotSpot) => {
+        navigation.navigate('Map', {
+            hotSpotId: hotSpot.id,
+        });
+    };
 
     return (
         <View style={styles.container}>
-            <HotSpotList/>
-        </View >
+            <View style={styles.titleBox}>
+                <Text style={styles.title}>Date Spots</Text>
+                <Text style={styles.subtitle}>These are all hotspots from Thomas Date idea google maps list</Text>
+            </View>
+            <HotSpotList onPressItem={handlePressItem} />
+        </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        padding: 10
-    },
-    listItem: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: 3,
-    },
-});
